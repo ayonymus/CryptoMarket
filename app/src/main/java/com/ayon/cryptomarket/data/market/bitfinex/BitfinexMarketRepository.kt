@@ -4,16 +4,27 @@ import com.ayon.cryptomarket.data.market.FlowingMarketRepository
 import com.ayon.cryptomarket.data.utils.toResult
 import com.ayon.cryptomarket.domain.TradeDetails
 import com.ayon.cryptomarket.domain.TradingPair
+import com.ayon.cryptomarket.framework.pollingFlowOf
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 
-class BitfinexMarketRepository (
+class BitfinexMarketRepository(
     private val api: BitfinexApi,
-    private val tradeSymbol: BitfinexTradeSymbolSource
+    private val tradeSymbol: BitfinexTradeSymbolSource,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val maxRepeat: Int = 100,
+    private val delay: Long = 5000
 ): FlowingMarketRepository {
 
     override suspend fun getTradeDetails(tradingPairs: List<TradingPair>): Flow<Result<List<TradeDetails>>> {
-        return flowOf(fetch(tradingPairs))
+        return pollingFlowOf(
+            task = { fetch(tradingPairs) },
+            maxRepeat = maxRepeat,
+            delayMS = delay
+        )
+            .flowOn(dispatcher)
     }
 
     private suspend fun fetch(tradingPairs: List<TradingPair>) : Result<List<TradeDetails>> {
