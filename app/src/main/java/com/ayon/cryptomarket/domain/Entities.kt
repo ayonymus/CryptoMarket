@@ -21,5 +21,10 @@ data class TokenDetails(
 
 data class Trade(
     val tradeDetails: TradeDetails,
-    val tokenDetails: TokenDetails?
+    val tokenDetails: TokenDetails?,
+)
+
+data class MarketUpdate(
+    val trades: List<Trade>,
+    val receivedAt: String
 )

@@ -5,7 +5,7 @@ import com.ayon.cryptomarket.data.prefs.TradingPairPreferences
 import org.koin.dsl.module
 
 val preferencesModule = module {
-    provideTradingPreferences()
+    factory { provideTradingPreferences() }
 }
 
 fun provideTradingPreferences(): TradingPairPreferences {

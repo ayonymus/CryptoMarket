@@ -4,6 +4,7 @@ import com.ayon.cryptomarket.data.market.FlowingMarketRepository
 import com.ayon.cryptomarket.data.prefs.TradingPairPreferences
 import com.ayon.cryptomarket.data.token.TokenDetailsRepository
 import com.ayon.cryptomarket.domain.*
+import com.ayon.cryptomarket.framework.TimeProvider
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
@@ -25,17 +26,21 @@ val TRADE_DETAILS = TRADING_PAIRS.map {
 
 val TOKEN_MAP = TOKENS.associateWith { TokenDetails(it, it, it) }
 
+const val testTime = "12:34:56"
+
 internal class SubscribeToMarketDataUseCaseTest {
 
     private var market = mock<FlowingMarketRepository>()
     private var tradingPairs = mock<TradingPairPreferences>()
     private var tokenDetails = mock<TokenDetailsRepository>()
+    private var time = mock<TimeProvider>()
 
     private lateinit var useCase: SubscribeToMarketDataUseCase
 
     @Before
     fun setUp() {
-        useCase = SubscribeToMarketDataUseCase(market, tradingPairs, tokenDetails)
+        useCase = SubscribeToMarketDataUseCase(market, tradingPairs, tokenDetails, time)
+        whenever(time.nowHHMMSS()).thenReturn(testTime)
     }
 
     @Test
@@ -45,7 +50,7 @@ internal class SubscribeToMarketDataUseCaseTest {
             whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.success(emptyMap()))
             whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.success(TRADE_DETAILS)))
 
-            val expected = TRADE_DETAILS.map { Trade(it, null) }
+            val expected = Result.success(MarketUpdate(TRADE_DETAILS.map { Trade(it, null) }, testTime))
 
             val marketFlow = useCase()
 
@@ -60,7 +65,7 @@ internal class SubscribeToMarketDataUseCaseTest {
             whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.failure(IOException()))
             whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.success(TRADE_DETAILS)))
 
-            val expected = TRADE_DETAILS.map { Trade(it, null) }
+            val expected = Result.success(MarketUpdate(TRADE_DETAILS.map { Trade(it, null) }, testTime))
 
             val marketFlow = useCase()
 
@@ -75,7 +80,7 @@ internal class SubscribeToMarketDataUseCaseTest {
             whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.success(TOKEN_MAP))
             whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.success(TRADE_DETAILS)))
 
-            val expected = TRADE_DETAILS.map { Trade(it, TOKEN_MAP[it.tradingPair.symbol1]) }
+            val expected = Result.success(MarketUpdate(TRADE_DETAILS.map { Trade(it, TOKEN_MAP[it.tradingPair.symbol1]) }, testTime))
 
             val marketFlow = useCase()
 

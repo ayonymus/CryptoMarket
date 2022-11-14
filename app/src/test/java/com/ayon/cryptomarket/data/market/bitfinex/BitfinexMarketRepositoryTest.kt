@@ -3,11 +3,11 @@ package com.ayon.cryptomarket.data.market.bitfinex
 import com.ayon.cryptomarket.data.utils.NetworkError
 import com.ayon.cryptomarket.domain.TradeDetails
 import com.ayon.cryptomarket.domain.TradingPair
+import com.ayon.cryptomarket.testing.TestTradeSymbolSource
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
-import okio.IOException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before

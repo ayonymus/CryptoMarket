@@ -1,10 +1,7 @@
 package com.ayon.cryptomarket
 
 import android.app.Application
-import com.ayon.cryptomarket.di.marketDataModule
-import com.ayon.cryptomarket.di.marketNetworkModule
-import com.ayon.cryptomarket.di.networkModule
-import com.ayon.cryptomarket.di.preferencesModule
+import com.ayon.cryptomarket.di.*
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -18,10 +15,13 @@ class App : Application(){
         startKoin{
             androidContext(this@App)
             modules(
+                appModule,
                 networkModule,
                 marketNetworkModule,
                 marketDataModule,
-                preferencesModule
+                marketUiModule,
+                preferencesModule,
+                tokenDataModule
             )
         }
 

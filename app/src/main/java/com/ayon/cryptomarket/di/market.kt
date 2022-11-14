@@ -2,7 +2,6 @@ package com.ayon.cryptomarket.di
 
 import com.ayon.cryptomarket.data.market.FlowingMarketRepository
 import com.ayon.cryptomarket.data.market.bitfinex.*
-import com.ayon.cryptomarket.data.token.TokenDetailsRepository
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import org.koin.dsl.module

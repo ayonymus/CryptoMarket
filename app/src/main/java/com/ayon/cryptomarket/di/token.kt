@@ -6,7 +6,7 @@ import com.ayon.cryptomarket.domain.TokenDetails
 import org.koin.dsl.module
 
 val tokenDataModule = module {
-    provideTokeDetailsRepository()
+    single { provideTokeDetailsRepository() }
 }
 
 fun provideTokeDetailsRepository(): TokenDetailsRepository {

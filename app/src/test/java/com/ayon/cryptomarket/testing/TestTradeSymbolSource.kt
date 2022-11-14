@@ -1,5 +1,7 @@
-package com.ayon.cryptomarket.data.market.bitfinex
+package com.ayon.cryptomarket.testing
 
+import com.ayon.cryptomarket.data.market.bitfinex.BitfinexTradeSymbolSource
+import com.ayon.cryptomarket.data.market.bitfinex.TradingSymbol
 import com.ayon.cryptomarket.domain.TradingPair
 
 class TestTradeSymbolSource: BitfinexTradeSymbolSource {
