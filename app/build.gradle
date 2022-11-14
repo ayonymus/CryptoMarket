@@ -78,7 +78,7 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:5.0.1"
 
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1") {
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4") {
         exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
     }
     testImplementation 'junit:junit:4.13.2'
