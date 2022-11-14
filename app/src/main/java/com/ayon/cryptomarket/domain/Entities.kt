@@ -18,3 +18,8 @@ data class TokenDetails(
     val name: String,
     val logo: String
 )
+
+data class Trade(
+    val tradeDetails: TradeDetails,
+    val tokenDetails: TokenDetails?
+)
