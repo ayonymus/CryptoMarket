@@ -13,7 +13,7 @@ class SubscribeToMarketDataUseCase(
     private val tokenDetailsRepository: TokenDetailsRepository
 ) {
 
-    suspend operator fun invoke(): Flow<List<Trade>> {
+    suspend operator fun invoke(): Flow<Result<List<Trade>>> {
         val tradingPairs = tradingPairPreference.getTradingPairs()
         val symbols = tradingPairs.map { it.symbol1 }
 
@@ -21,12 +21,14 @@ class SubscribeToMarketDataUseCase(
             .fold(onSuccess = { it }, onFailure = { emptyMap() })
 
         return marketRepository.getTradeDetails(tradingPairs)
-            .map { tradeList ->
-                tradeList.map { trade ->
-                    Trade(
-                        tradeDetails = trade,
-                        tokenDetails = tokenDetails[trade.tradingPair.symbol1]
-                    )
+            .map { tradeListResult ->
+                tradeListResult.map { tradeList ->
+                    tradeList.map { trade ->
+                        Trade(
+                            tradeDetails = trade,
+                            tokenDetails = tokenDetails[trade.tradingPair.symbol1]
+                        )
+                    }
                 }
             }
     }

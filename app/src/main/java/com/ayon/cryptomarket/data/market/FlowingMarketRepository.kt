@@ -5,5 +5,5 @@ import com.ayon.cryptomarket.domain.TradingPair
 import kotlinx.coroutines.flow.Flow
 
 interface FlowingMarketRepository{
-    suspend fun getTradeDetails(tradingPairs: List<TradingPair>): Flow<List<TradeDetails>>
+    suspend fun getTradeDetails(tradingPairs: List<TradingPair>): Flow<Result<List<TradeDetails>>>
 }

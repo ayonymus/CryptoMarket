@@ -43,7 +43,7 @@ internal class SubscribeToMarketDataUseCaseTest {
         runBlocking {
             whenever(tradingPairs.getTradingPairs()).thenReturn(TRADING_PAIRS)
             whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.success(emptyMap()))
-            whenever(market.getTradeDetails(any())).thenReturn(flowOf(TRADE_DETAILS))
+            whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.success(TRADE_DETAILS)))
 
             val expected = TRADE_DETAILS.map { Trade(it, null) }
 
@@ -58,7 +58,7 @@ internal class SubscribeToMarketDataUseCaseTest {
         runBlocking {
             whenever(tradingPairs.getTradingPairs()).thenReturn(TRADING_PAIRS)
             whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.failure(IOException()))
-            whenever(market.getTradeDetails(any())).thenReturn(flowOf(TRADE_DETAILS))
+            whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.success(TRADE_DETAILS)))
 
             val expected = TRADE_DETAILS.map { Trade(it, null) }
 
@@ -73,9 +73,25 @@ internal class SubscribeToMarketDataUseCaseTest {
         runBlocking {
             whenever(tradingPairs.getTradingPairs()).thenReturn(TRADING_PAIRS)
             whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.success(TOKEN_MAP))
-            whenever(market.getTradeDetails(any())).thenReturn(flowOf(TRADE_DETAILS))
+            whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.success(TRADE_DETAILS)))
 
             val expected = TRADE_DETAILS.map { Trade(it, TOKEN_MAP[it.tradingPair.symbol1]) }
+
+            val marketFlow = useCase()
+
+            assertEquals(expected, marketFlow.single())
+        }
+    }
+
+    @Test
+    fun `subscribe to market with trade pairs from preferences, error`() {
+        runBlocking {
+            val error = IOException()
+            whenever(tradingPairs.getTradingPairs()).thenReturn(TRADING_PAIRS)
+            whenever(tokenDetails.fetchTokenDetails(any())).thenReturn(Result.success(TOKEN_MAP))
+            whenever(market.getTradeDetails(any())).thenReturn(flowOf(Result.failure(error)))
+
+            val expected = Result.failure<List<TradeDetails>>(error)
 
             val marketFlow = useCase()
 
