@@ -7,15 +7,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import com.ayon.cryptomarket.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterView(
     modifier: Modifier = Modifier,
     state: MutableState<TextFieldValue>,
-    placeHolder: String = "Filter"
+    placeHolder: String = stringResource(id = R.string.filter)
 ) {
 
     TextField(
@@ -33,11 +35,11 @@ fun FilterView(
 @Preview
 @Composable
 fun FilterViewPreview() {
-    FilterView(state = mutableStateOf(TextFieldValue()), placeHolder = "Filter items")
+    FilterView(state = mutableStateOf(TextFieldValue()),)
 }
 
 @Preview
 @Composable
 fun FitlerViewPreview2() {
-    FilterView(state = mutableStateOf(TextFieldValue("Thing")), placeHolder = "Filter items")
+    FilterView(state = mutableStateOf(TextFieldValue("Thing")))
 }

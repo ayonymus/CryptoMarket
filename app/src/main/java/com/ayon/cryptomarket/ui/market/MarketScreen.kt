@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
+import com.ayon.cryptomarket.R
 import com.ayon.cryptomarket.domain.Trade
 import com.ayon.cryptomarket.domain.TradeDetails
 import com.ayon.cryptomarket.domain.TradingPair
@@ -56,7 +57,7 @@ fun MarketScreen(state: State<MarketState>, onFilterChange: (text: String) -> Un
     val filterState = remember { mutableStateOf(TextFieldValue(state.value.filter)) }
     onFilterChange(filterState.value.text)
     Scaffold(
-        topBar =  { TopAppBar(title = { Text("Market Rates") }) },
+        topBar =  { TopAppBar(title = { Text(text = stringResource(id = R.string.app_name)) }) },
         content = { contentPadding ->
             Column(
                 modifier = Modifier.padding(contentPadding)
@@ -71,7 +72,8 @@ fun MarketScreen(state: State<MarketState>, onFilterChange: (text: String) -> Un
 
                 if (state.value.hasErrorFetching) {
                     Box(
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier
+                            .padding(8.dp)
                             .fillMaxWidth()
                             .height(40.dp)
                             .background(Color.Red)
@@ -84,7 +86,7 @@ fun MarketScreen(state: State<MarketState>, onFilterChange: (text: String) -> Un
                             modifier = Modifier,
                             color = Color.White,
                             textAlign = TextAlign.Center,
-                            text = "Error refreshing data! Prices may be outdated"
+                            text = stringResource(id = R.string.generic_error)
                         )
 
                     }
@@ -92,7 +94,7 @@ fun MarketScreen(state: State<MarketState>, onFilterChange: (text: String) -> Un
                 }
                 Text(
                     modifier = Modifier.padding(8.dp),
-                        text = "Last updated: " + state.value.lastUpdated,
+                        text = stringResource(id = R.string.last_updated, state.value.lastUpdated),
                         fontSize = 12.sp,
                     )
 
