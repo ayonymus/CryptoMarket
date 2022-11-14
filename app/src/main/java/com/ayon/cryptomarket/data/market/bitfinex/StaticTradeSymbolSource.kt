@@ -1,7 +1,9 @@
 package com.ayon.cryptomarket.data.market.bitfinex
 
+import com.ayon.cryptomarket.data.prefs.StaticTradingPairPreferences.Companion.defaultTradingPairs
 import com.ayon.cryptomarket.domain.TradingPair
 
+// TODO implement non-static
 class StaticTradeSymbolSource: BitfinexTradeSymbolSource {
 
     override suspend fun getTradeSymbol(tradingPair: TradingPair): TradingSymbol {
@@ -19,13 +21,6 @@ class StaticTradeSymbolSource: BitfinexTradeSymbolSource {
             "tLUNA:USD","tMATIC:USD","tNEXO:USD","tOCEAN:USD","tBEST:USD",
             "tAAVE:USD","tPLUUSD","tFILUSD"
         )
-
-        val defaultTradingPairs = listOf(
-            "BTC", "ETH", "CHSB", "LTC", "XRP", "DSH",
-            "RRT", "EOS", "SAN", "DAT", "SNT", "DOGE",
-            "LUNA", "MATIC", "NEXO", "OCEAN", "BEST",
-            "AAVE", "PLU", "FIL")
-            .map { symbol -> TradingPair(symbol, "USD") }
     }
 
 }

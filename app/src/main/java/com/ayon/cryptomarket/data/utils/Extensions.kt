@@ -4,6 +4,7 @@ import retrofit2.Response
 
 // This is not the best way of handling network errors, but will suffice for now.
 // A more robust method is described here https://proandroiddev.com/modeling-retrofit-responses-with-sealed-classes-and-coroutines-9d6302077dfe
+// TODO create a type adapter
 fun <T> Response<T>.toResult(): Result<T> {
     return if (this.isSuccessful) {
         Result.success(this.body()!!)
