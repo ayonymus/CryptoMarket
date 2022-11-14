@@ -1,9 +1,14 @@
 # CryptoMarkets
 
 ## Features
-This app is polling a list of crypto trade pairs from an end point and polls every 5 seconds.
+This app getting a list of crypto trade pairs from an end point and polls every 5 seconds.
 Displays basic information about the tokens.
 User can filter the list of tokens.
+
+Main  | Filter | Error                                  
+:--:|:--:|:--:
+![](https://raw.githubusercontent.com/ayonymus/CryptoMarket/main/docs/screenshot_main.png)  | ![](https://raw.githubusercontent.com/ayonymus/CryptoMarket/main/docs/filtering.png) |  ![](https://raw.githubusercontent.com/ayonymus/CryptoMarket/main/docs/error.png)
+
 
 ## Tech used
 I was following **CleanArchitecture** principles so that the code isn't tightly coupled.
@@ -52,12 +57,12 @@ However, the `TradingPairPreferences` interface and the `TickerPair` data class 
 
 The `BitfinexTradeSymbolSource` implementation is also static. This could be connected to the Bitfinex configs endpoint, and retrieve dynamic pairs
 
-it would be nice to add a `preferences` screen so that user can change/select Tickers.
+it would be nice to add a `preferences` screen so that user can change/select Tickers. `Navigation` is already added.
 
 Modularization would also be nice.
 
-Token Repository should be refershed every now and then.
+Token Repository should be refreshed every now and then.
 
-Styling could be massively improved. Both visual code. 
+Styling could be massively improved.
 
 Setting up ktlint or Detekt would improve code formatting issues.
