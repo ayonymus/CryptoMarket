@@ -58,13 +58,13 @@ class MarketViewModel(
                         },
                         onFailure = {
                             Timber.e(it)
-                            return@map _marketFlow.value.copy(errorFetchingData = true)
+                            return@map _marketFlow.value.copy(hasErrorFetching = true)
                         }
                     )
                 }
                 .catch {
                     Timber.e(it)
-                    _marketFlow.emit(marketFlow.value.copy(errorFetchingData = true))
+                    _marketFlow.emit(marketFlow.value.copy(hasErrorFetching = true))
                 }
                 .collect {
                     _marketFlow.emit(it)
@@ -81,7 +81,7 @@ class MarketViewModel(
 data class MarketState(
     val tradeData: List<Trade> = emptyList(),
     val filteredData: List<Trade> = emptyList(),
-    val errorFetchingData: Boolean = false,
+    val hasErrorFetching: Boolean = false,
     val isFirstLoad: Boolean = true,
     val filter: String = "",
     val lastUpdated: String = "",

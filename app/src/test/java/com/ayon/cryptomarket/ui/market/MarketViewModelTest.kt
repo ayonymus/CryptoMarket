@@ -43,7 +43,7 @@ class MarketViewModelTest {
             MarketState(
                 isListening = true,
                 isFirstLoad = true,
-                errorFetchingData = true
+                hasErrorFetching = true
             ),
             market.value)
 
