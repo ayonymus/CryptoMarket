@@ -8,9 +8,13 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-val marketNetworkModule = module {
+val marketDataModule = module {
     factory { provideGsonConverterFactory() }
     factory { provideBitfinexApi(get(), get()) }
+    factory { provideBitfinexTradeSymbolSource() }
+    single<FlowingMarketRepository> {
+        BitfinexMarketRepository(get(), get())
+    }
 }
 
 fun provideGsonConverterFactory(): GsonConverterFactory {
@@ -30,16 +34,6 @@ fun provideBitfinexApi(
         .addConverterFactory(gsonConverterFactory)
         .build()
         .create(BitfinexApi::class.java)
-}
-
-val marketDataModule = module{
-
-    factory { provideBitfinexTradeSymbolSource() }
-
-    single<FlowingMarketRepository> {
-        BitfinexMarketRepository(get(), get())
-    }
-
 }
 
 fun provideBitfinexTradeSymbolSource(): BitfinexTradeSymbolSource {

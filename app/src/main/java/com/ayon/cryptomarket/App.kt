@@ -17,11 +17,11 @@ class App : Application(){
             modules(
                 appModule,
                 networkModule,
-                marketNetworkModule,
                 marketDataModule,
                 marketUiModule,
                 preferencesModule,
-                tokenDataModule
+                tokenDataModule,
+                tokenDatabaseModule
             )
         }
 
