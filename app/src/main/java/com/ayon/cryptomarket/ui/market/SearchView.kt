@@ -16,15 +16,16 @@ import com.ayon.cryptomarket.R
 @Composable
 fun FilterView(
     modifier: Modifier = Modifier,
-    state: MutableState<TextFieldValue>,
+    value: String,
+    onFilterChange: (text: String) -> Unit,
     placeHolder: String = stringResource(id = R.string.filter)
 ) {
 
     TextField(
         modifier = modifier,
-        value = state.value,
-        onValueChange = { value ->
-            state.value = value
+        value =value,
+        onValueChange = { newValue ->
+            onFilterChange(newValue)
         },
         placeholder = { Text(text = placeHolder) },
         label = { Text(text = placeHolder) }
@@ -35,11 +36,11 @@ fun FilterView(
 @Preview
 @Composable
 fun FilterViewPreview() {
-    FilterView(state = mutableStateOf(TextFieldValue()),)
+    FilterView(value="Thing", onFilterChange = { })
 }
 
 @Preview
 @Composable
-fun FitlerViewPreview2() {
-    FilterView(state = mutableStateOf(TextFieldValue("Thing")))
+fun FilterViewPreview2() {
+   FilterView(value="Thing", onFilterChange = { })
 }
